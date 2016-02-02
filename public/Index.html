@@ -1,0 +1,122 @@
+
+<html>
+<head>
+<title>CSV to JSON Converter in HTML5 | TechSlides</title>
+<style>
+#drop {
+	border:3px solid;
+	margin-bottom:20px;
+	padding:20px 0px 0px 0px;
+}
+</style>
+</head>
+<body>
+	
+<h1 align="center">CSV to JSon Converter </h1>
+<div id="drop" align="center">
+
+	DROP!<button onclick="document.querySelector('input').click()">Select</button> CSV File
+	<input style="visibility: collapse; width: 0px;" type="file" onchange="upload(this.files[0])">
+
+</div>
+
+<div id="output"></div>
+
+<script type="text/javascript">
+
+var output = document.getElementById("output");
+
+//var csv is the CSV file with headers
+function csvJSON(csv){
+ 
+  var lines=csv.split("\n");
+ 
+  var result = [];
+ 
+  var headers=lines[0].split(","); //Seprated the CSV lines
+ 
+  for(var i=1;i<lines.length;i++)
+  {
+	  var obj = {};
+	  var currentline=lines[i].split(","); //Seprated the split line Words
+ 
+	  for(var j=0;j<headers.length;j++){
+		  obj[headers[j]] = currentline[j];
+	  }
+ 
+	  result.push(obj);
+ 
+  }
+
+ //return result; //JavaScript object
+ // return JSON.stringify(result); //JSON
+
+var identedText = JSON.stringify(result,null,4);
+    
+
+document.write("<h1>Json format</h1> <pre>"+identedText+"</pre>");
+
+}
+
+
+
+
+    /* Drag drop stuff */
+    window.ondragover = function(e) {e.preventDefault()}
+    window.ondrop = function(e) {
+	    e.preventDefault();
+	    console.log("Reading...");
+	    var length = e.dataTransfer.items.length;
+	    if(length > 1){
+	    	console.log("Please only drop 1 file.");
+		   } else {
+	    	upload(e.dataTransfer.files[0]);
+	    }
+	}
+
+    /* main upload function */
+    function upload(file) {
+    	if( file.type.match(/text\/csv/) || file.type.match(/vnd\.ms-excel/) ){
+        //if(file.type.match(/text\/csv/)){
+	    	oFReader = new FileReader();
+	        oFReader.onloadend = function() {
+
+	        	//console.log(csvJSON(this.result));
+
+	        	var json = csvJSON(this.result);
+				
+			
+    
+    /* output the serialized JSON with pretty print */
+    
+	//document.write("<h1>Idented 4 spaces</h1> <pre>"+identedText+"</pre>");
+				//alert(json);
+
+	        	//var blob = new Blob([json], {type: 'application/json'});
+		
+
+
+			//$('#printjson').append(data);
+				//alert(blob);
+				//var url = URL.createObjectURL(blob);
+        	//output.innerHTML = '<pre><a href="'+url+'">JSON file</a>';
+			//	output.innerHTML = "<pre>" +json+"</pre>";
+
+
+
+
+	        };
+	        oFReader.readAsText(file);
+        } else {
+        	console.log("This file does not seem to be a CSV.");
+        }
+    }
+</script>
+
+
+
+
+
+</body>
+</html>
+ 
