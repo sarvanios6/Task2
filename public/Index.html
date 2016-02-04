@@ -1,8 +1,9 @@
-
+<!--csvtojson converter build in java script-->
 <html>
 <head>
 <title>CSV to JSON Converter in HTML5 | TechSlides</title>
 <style>
+
 #drop {
 	border:3px solid;
 	margin-bottom:20px;
@@ -13,6 +14,8 @@
 <body>
 	
 <h1 align="center">CSV to JSon Converter </h1>
+
+<!-- Create a button to selecting a .csv file and get the input for this script-->
 <div id="drop" align="center">
 
 	DROP!<button onclick="document.querySelector('input').click()">Select</button> CSV File
@@ -20,31 +23,34 @@
 
 </div>
 
+
+<!-- This div printed output Json values-->
 <div id="output"></div>
 
 <script type="text/javascript">
 
-var output = document.getElementById("output");
+var output = document.getElementById("output");// get the output values
 
-//var csv is the CSV file with headers
+// .csv file split funcitons
 function csvJSON(csv){
  
-  var lines=csv.split("\n");
+  var lines=csv.split("\n");//split the lines
  
-  var result = [];
+  var result = [];//stored the lines in the array
  
-  var headers=lines[0].split(","); //Seprated the CSV lines
+  var headers=lines[0].split(","); //split the lines headers
  
-  for(var i=1;i<lines.length;i++)
+  for(var i=1;i<lines.length;i++)//selecting the all line in the file
   {
-	  var obj = {};
-	  var currentline=lines[i].split(","); //Seprated the split line Words
+	  var obj = {};//array created for stored in the splited data
+	  var currentline=lines[i].split(","); //split the lines headers
  
-	  for(var j=0;j<headers.length;j++){
-		  obj[headers[j]] = currentline[j];
+	  for(var j=0;j<headers.length;j++)//selected the all headers
+	  {
+		  obj[headers[j]] = currentline[j];// stored the lines header datas in this obj array
 	  }
  
-	  result.push(obj);
+	  result.push(obj);//obj data pust to result array name
  
   }
 
@@ -54,11 +60,9 @@ function csvJSON(csv){
 var identedText = JSON.stringify(result,null,4);
     
 
-document.write("<h1>Json format</h1> <pre>"+identedText+"</pre>");
+document.write("<h1>Json format</h1> <pre>"+identedText+"</pre>");//write the result in the output div page
 
 }
-
-
 
 
     /* Drag drop stuff */
@@ -76,39 +80,21 @@ document.write("<h1>Json format</h1> <pre>"+identedText+"</pre>");
 
     /* main upload function */
     function upload(file) {
-    	if( file.type.match(/text\/csv/) || file.type.match(/vnd\.ms-excel/) ){
-        //if(file.type.match(/text\/csv/)){
+    	if( file.type.match(/text\/csv/)) //|| file.type.match(/vnd\.ms-excel/) )//.csv file format
+    	{
 	    	oFReader = new FileReader();
 	        oFReader.onloadend = function() {
 
 	        	//console.log(csvJSON(this.result));
-
-	        	var json = csvJSON(this.result);
-				
 			
-    
-    /* output the serialized JSON with pretty print */
-    
-	//document.write("<h1>Idented 4 spaces</h1> <pre>"+identedText+"</pre>");
-				//alert(json);
-
-	        	//var blob = new Blob([json], {type: 'application/json'});
-		
-
-
-			//$('#printjson').append(data);
-				//alert(blob);
-				//var url = URL.createObjectURL(blob);
-        	//output.innerHTML = '<pre><a href="'+url+'">JSON file</a>';
-			//	output.innerHTML = "<pre>" +json+"</pre>";
-
-
-
-
+	        	var json = csvJSON(this.result);//csvJson result data pass to json variable
 	        };
-	        oFReader.readAsText(file);
-        } else {
-        	console.log("This file does not seem to be a CSV.");
+	        
+	        oFReader.readAsText(file);// .csv file data read this line from upload function
+	        
+        } else 
+        {
+        	console.log("This file does not seem to be a CSV.");// if .csv fileformat is not means its throw the error message 
         }
     }
 </script>
