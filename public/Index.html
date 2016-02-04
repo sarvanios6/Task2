@@ -36,13 +36,13 @@ function csvJSON(csv){
  
   var lines=csv.split("\n");//split the lines
  
-  var result = [];//stored the lines in the array
+  var result = [];//stored the data in the array
  
   var headers=lines[0].split(","); //split the lines headers
  
-  for(var i=1;i<lines.length;i++)//selecting the all line in the file
+  for(var i=1;i<lines.length;i++)//selecting the all line in the file each line 
   {
-	  var obj = {};//array created for stored in the splited data
+	  var obj = {};
 	  var currentline=lines[i].split(","); //split the lines headers
  
 	  for(var j=0;j<headers.length;j++)//selected the all headers
